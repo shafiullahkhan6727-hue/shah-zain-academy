@@ -1,0 +1,44 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Online Practice Tests | Shah Zain Learning Academy</title><style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7fc;color:#172337;line-height:1.6}
+header{background:#102b50;color:white;text-align:center;padding:24px 12px}
+nav{background:#173e70;padding:12px;text-align:center}
+nav a{color:white;margin:0 10px;text-decoration:none;font-weight:bold}
+main{max-width:1100px;margin:24px auto;padding:0 14px}
+.card,.item{background:white;border:1px solid #dbe4f0;border-radius:12px;padding:16px;margin:12px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+h2,h3{color:#102b50}
+label{display:block;margin:10px 0}
+select,input{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:7px}
+button,.btn{display:inline-block;background:#1e4f91;color:white;border:0;border-radius:7px;padding:10px 14px;text-decoration:none;cursor:pointer;margin:5px 0}
+.price{font-size:22px;font-weight:bold;color:#147343}
+.notice{background:#fff8df;padding:12px;border-left:4px solid #d49b19}
+footer{text-align:center;padding:20px;color:#667085}
+[hidden]{display:none!important}
+</style></head><body>
+<header><h1>Shah Zain Learning Academy - Online</h1><p>Online Practice Tests</p></header>
+<nav><a href="../index.html">Home</a><a href="study-materials.html">Study Materials</a><a href="online-tests.html">Online Tests</a></nav>
+<main><section class="card"><h2>10 Sequential Practice Tests</h2><p>Pass mark: 70%. Pass a test to unlock the next one. This demo stores progress in your browser and is not secure against tampering.</p><div id="dashboard" class="grid"></div></section>
+<section class="card" id="panel" hidden><h2 id="title"></h2><form id="testForm"><div id="questions"></div><button>Submit Test</button></form><p id="result"></p></section></main>
+<footer>Learn With Shafi Ullah Khan &amp; Hasina Fatima</footer><script>
+const bank = [
+["Capital of Pakistan?",["Karachi","Islamabad","Lahore","Quetta"],1],
+["Founder of Pakistan?",["Allama Iqbal","Quaid-e-Azam","Liaquat Ali Khan","Sir Syed"],1],
+["9 x 6 equals?",["45","54","63","56"],1],
+["Red Planet?",["Venus","Mars","Jupiter","Mercury"],1],
+["National language of Pakistan?",["Punjabi","Sindhi","Urdu","Pashto"],2],
+["Largest ocean?",["Atlantic","Indian","Arctic","Pacific"],3],
+["Which organ pumps blood?",["Lungs","Brain","Heart","Kidney"],2],
+["1000 metres equal?",["1 kilometre","10 kilometres","100 kilometres","100 centimetres"],0],
+["CPU stands for?",["Central Processing Unit","Computer Personal Unit","Central Program Utility","Control Processing User"],0],
+["Highest mountain in the world?",["K2","Nanga Parbat","Mount Everest","Broad Peak"],2]
+];
+const tests=Array.from({length:10},(_,i)=>Array.from({length:5},(_,j)=>{const k=(i*5+j)%bank.length;return bank[k]}));
+const key='szla_passed_tests_v1';let active=-1;
+function passed(){try{return JSON.parse(localStorage.getItem(key)||'[]')}catch(e){return []}}
+function dashboard(){const d=document.getElementById('dashboard');d.innerHTML='';tests.forEach((t,i)=>{const ok=i===0||passed().includes(i);const done=passed().includes(i+1);const box=document.createElement('div');box.className='item';const h=document.createElement('h3');h.textContent='Test '+(i+1);const p=document.createElement('p');p.textContent=done?'Passed':ok?'Available':'Locked — pass previous test';const b=document.createElement('button');b.textContent=done?'Retake':'Start Test';b.disabled=!ok;b.onclick=()=>start(i);box.append(h,p,b);d.appendChild(box)})}
+function start(i){active=i;document.getElementById('panel').hidden=false;document.getElementById('title').textContent='Test '+(i+1);document.getElementById('result').textContent='';const qbox=document.getElementById('questions');qbox.innerHTML='';tests[i].forEach((q,j)=>{const div=document.createElement('div');div.className='item';const h=document.createElement('h3');h.textContent=(j+1)+'. '+q[0];div.appendChild(h);q[1].forEach((opt,k)=>{const label=document.createElement('label');const input=document.createElement('input');input.type='radio';input.name='q'+j;input.value=k;input.required=true;label.append(input,document.createTextNode(' '+opt));div.appendChild(label)});qbox.appendChild(div)});}
+document.getElementById('testForm').addEventListener('submit',e=>{e.preventDefault();let score=0;tests[active].forEach((q,j)=>{const a=document.querySelector('input[name="q'+j+'"]:checked');if(a&&Number(a.value)===q[2])score++});const pct=Math.round(score/5*100);if(pct>=70){const p=passed();if(!p.includes(active+1)){p.push(active+1);localStorage.setItem(key,JSON.stringify(p))}}document.getElementById('result').textContent='Score: '+score+'/5 ('+pct+'%). '+(pct>=70?'Passed! Next test unlocked.':'Not passed. Try again; next test remains locked.');dashboard()});
+dashboard();
+</script></body></html>

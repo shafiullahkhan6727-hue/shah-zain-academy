@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Choose Department & Package | Shah Zain Academy</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f6fb;color:#17243a}
+header{background:#092b59;color:white;padding:22px 15px;text-align:center}
+main{max-width:720px;margin:24px auto;padding:18px}
+.card{background:white;padding:22px;border-radius:14px;box-shadow:0 4px 18px #0001;margin-bottom:18px}
+h2{margin-top:0;color:#103b73}
+label{font-weight:bold;display:block;margin:14px 0 8px}
+select,button,input{width:100%;padding:13px;border:1px solid #ccd5e2;border-radius:8px;font-size:16px}
+button{background:#103b73;color:white;border:0;font-weight:bold;cursor:pointer;margin-top:12px}
+button:disabled{opacity:.5}
+.hidden{display:none}
+.note{font-size:14px;line-height:1.6;color:#526176}
+#status{padding:12px;border-radius:8px;background:#edf4ff;line-height:1.6}
+</style>
+</head>
+<body>
+<header>
+<h1>Shah Zain Learning Academy - Online</h1>
+<p>Choose your department, package and payment method</p>
+</header>
+<main>
+<section class="card" id="departmentStep">
+<h2>Step 1 — Choose Department</h2>
+<label for="department">Choose Department</label>
+<select id="department">
+<option value="">-- Choose Department --</option>
+<option>Police</option><option>ASI</option><option>Constable</option>
+<option>Rangers</option><option>ASF</option><option>FIA</option>
+<option>FBR</option><option>ANF</option><option>NAB</option>
+<option>Army</option><option>PMA Long Course</option><option>ISSB</option>
+<option>AFNS</option><option>LCC</option><option>PAF</option>
+<option>Navy</option><option>Rescue 1122</option><option>Customs</option>
+<option>Forest Guard</option><option>PERA</option><option>MOD</option>
+<option>FPSC</option><option>PPSC</option><option>KPPSC</option>
+<option>NTS</option><option>ETEA</option><option>WAPDA</option>
+<option>NADRA</option><option>Prison Department</option><option>Excise</option>
+<option>Other Government Jobs</option>
+</select>
+<button id="nextPackage">Continue to Packages</button>
+</section>
+
+<section class="card hidden" id="packageStep">
+<h2>Step 2 — Choose Package</h2>
+<p id="selectedDepartment"></p>
+<label for="package">Choose Package</label>
+<select id="package">
+<option value="">-- Choose Package --</option>
+<option value="1000">Package 1 — Academic Subjects — Rs. 1,000</option>
+<option value="3500">Package 2 — Complete Test Preparation — Rs. 3,500</option>
+</select>
+<p class="note" id="packageDescription">Select a package to see what is included.</p>
+<button id="nextPayment">Continue to Payment</button>
+</section>
+
+<section class="card hidden" id="paymentStep">
+<h2>Step 3 — Payment Method</h2>
+<p id="orderSummary"></p>
+<label for="method">Choose Payment Method</label>
+<select id="method">
+<option value="">-- Choose Payment Method --</option>
+<option value="easypaisa">EasyPaisa</option>
+<option value="jazzcash">JazzCash</option>
+<option value="bank">Bank Transfer</option>
+</select>
+<div id="paymentDetails" class="note"></div>
+<label for="payer">Your payment account/mobile number</label>
+<input id="payer" placeholder="Enter your payment account number">
+<label for="reference">Transaction ID / Reference Number</label>
+<input id="reference" placeholder="Enter transaction reference">
+<label for="proof">Payment proof image (optional)</label>
+<input id="proof" type="file" accept="image/*">
+<button id="submitRequest">Submit for Payment Verification</button>
+<p class="note">Submitting a request does not mean payment is confirmed. Never share your PIN, OTP or password.</p>
+</section>
+
+<section class="card hidden" id="resultStep">
+<h2>Payment Request</h2>
+<div id="status" role="status"></div>
+<p class="note">Access will be granted only after the payment is verified by the academy.</p>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+let order={};
+$("nextPackage").onclick=()=>{
+ const d=$("department").value;
+ if(!d){alert("Please choose a department first.");return}
+ order.department=d;
+ $("selectedDepartment").textContent="Selected Department: "+d;
+ $("packageStep").classList.remove("hidden");
+ $("packageStep").scrollIntoView({behavior:"smooth"});
+};
+
+$("package").onchange=()=>{
+ const descriptions={
+  "1000":"Academic Subjects study materials.",
+  "3500":"Complete syllabus, academic subjects, intelligence tests, GK, interview preparation, physical test preparation and employment selection process."
+ };
+ $("packageDescription").textContent=descriptions[$("package").value]||"Select a package to see what is included.";
+};
+$("nextPayment").onclick=()=>{
+ const v=$("package").value;
+ if(!v){alert("Please choose a package.");return}
+ order.amount=Number(v);
+ $("orderSummary").textContent="Department: "+order.department+" | Package: Rs. "+v;
+ $("paymentStep").classList.remove("hidden");
+ $("paymentStep").scrollIntoView({behavior:"smooth"});
+};
+$("method").onchange=()=>{
+ const m=$("method").value;
+ const details={
+ easypaisa:"EasyPaisa number: 03490437048",
+ jazzcash:"JazzCash number: 03095824984",
+ bank:"Bank IBAN: PK60JSBL9999903490437048"
+ };
+ $("paymentDetails").textContent=details[m]||"";
+};
+$("submitRequest").onclick = async () => {
+ const method = $("method").value;
+ const ref = $("reference").value.trim();
+
+ if (!order.department || ![1000, 3500].includes(Number(order.amount))) {
+   alert("Please select a department and a valid package.");
+   return;
+ }
+ if (!method || !ref) {
+   alert("Please choose a payment method and enter the transaction reference.");
+   return;
+ }
+
+ const button = $("submitRequest");
+ button.disabled = true;
+ $("status").textContent = "Submitting your request securely...";
+
+ try {
+   const response = await fetch("/api/orders", {
+     method: "POST",
+     credentials: "same-origin",
+     headers: {"Content-Type": "application/json"},
+     body: JSON.stringify({
+       department: order.department,
+       package: Number(order.amount),
+       method: method,
+       transaction_ref: ref
+     })
+   });
+
+   const data = await response.json().catch(() => ({}));
+
+   if (!response.ok) {
+     if (response.status === 401) {
+       $("status").textContent = "Please log in before submitting a payment request.";
+       const link = document.createElement("a");
+       link.href = "login.html";
+       link.textContent = " Open Login Page";
+       $("status").appendChild(link);
+     } else {
+       $("status").textContent = data.error || "Request failed. Please try again.";
+     }
+     $("resultStep").classList.remove("hidden");
+     $("resultStep").scrollIntoView({behavior: "smooth"});
+     return;
+   }
+
+   $("status").textContent =
+     "Request received. Order ID: " + data.order_id +
+     " | Status: " + data.status +
+     ". Your materials remain locked until the academy verifies your payment.";
+
+   $("resultStep").classList.remove("hidden");
+   $("resultStep").scrollIntoView({behavior: "smooth"});
+ } catch (error) {
+   $("status").textContent =
+     "Could not contact the server. Please check your connection and try again.";
+   $("resultStep").classList.remove("hidden");
+ } finally {
+   button.disabled = false;
+ }
+};
+</script>
+</body>
+</html>

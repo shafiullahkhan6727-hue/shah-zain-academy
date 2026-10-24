@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin Dashboard | Shah Zain Academy</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f2f5fa;color:#17243a;font-family:Arial,sans-serif}
+header{background:#092b59;color:white;text-align:center;padding:24px 12px}
+main{max-width:1100px;margin:25px auto;padding:0 14px}
+.card{background:white;padding:20px;border-radius:12px;margin-bottom:18px;box-shadow:0 3px 15px #0001}
+h2{color:#103b73;margin-top:0}
+input,button{font:inherit;padding:12px;border-radius:7px}
+input{display:block;width:100%;border:1px solid #ccd5e2;margin:8px 0 16px}
+button{border:0;background:#103b73;color:white;cursor:pointer;font-weight:bold;margin:3px}
+.reject{background:#b42318}.approve{background:#167647}
+.hidden{display:none}
+#login{max-width:430px;margin:35px auto}
+#message{padding:12px;background:#edf4ff;border-radius:7px;overflow-wrap:anywhere}
+.tablewrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:850px}
+td,th{text-align:left;padding:11px;border-bottom:1px solid #ddd;font-size:14px}
+th{background:#edf3fb}
+.small{font-size:13px;line-height:1.6;color:#566}
+</style>
+</head>
+<body>
+<header>
+<h1>Shah Zain Learning Academy - Online</h1>
+<p>Admin Dashboard</p>
+</header>
+<main>
+<section id="login" class="card">
+<h2>Admin Login</h2>
+<form id="loginForm">
+<label>Admin Username</label>
+<input id="username" autocomplete="username" required>
+<label>Admin Password</label>
+<input id="password" type="password" autocomplete="current-password" required>
+<button id="loginBtn" type="submit">Login</button>
+</form>
+</section>
+
+<section id="panel" class="hidden">
+<div class="card">
+<h2>Payment Orders</h2>
+<p id="welcome" class="small"></p>
+<button id="refresh">Refresh Orders</button>
+<button id="logout">Logout</button>
+<p id="message" role="status">Please log in.</p>
+<p class="small">ادائیگی کی تصدیق اپنے EasyPaisa، JazzCash یا بینک ریکارڈ سے کرنے کے بعد ہی آرڈر Approve کریں۔</p>
+</div>
+<div class="card">
+<div class="tablewrap">
+<table>
+<thead><tr>
+<th>ID</th><th>Email</th><th>Department</th><th>Package</th>
+<th>Amount</th><th>Method</th><th>Transaction Ref</th><th>Status</th><th>Action</th>
+</tr></thead>
+<tbody id="orders"><tr><td colspan="9">Login to view orders.</td></tr></tbody>
+</table>
+</div>
+</div>
+</section>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+let csrf="";
+function msg(s,error=false){
+ $("message").textContent=s;
+ $("message").style.background=error?"#fff0f0":"#edf4ff";
+}
+async function api(path,options={}){
+ const headers={...(options.headers||{})};
+ if(options.body)headers["Content-Type"]="application/json";
+ if(csrf)headers["X-Admin-CSRF"]=csrf;
+ let r;
+ try{
+  r=await fetch(path,{...options,headers,credentials:"same-origin"});
+ }catch(e){
+  throw Error("Backend se rabta nahi hua. Flask server start karein.");
+ }
+ const d=await r.json().catch(()=>({}));
+ if(!r.ok)throw Error(d.error||"Request failed: "+r.status);
+ return d;
+}
+$("loginForm").onsubmit=async e=>{
+ e.preventDefault();
+ $("loginBtn").disabled=true;
+ try{
+  const d=await api("/api/admin/login",{
+   method:"POST",
+   body:JSON.stringify({
+    username:$("username").value.trim(),
+    password:$("password").value
+   })
+  });
+  csrf=d.csrf_token;
+  $("password").value="";
+  $("login").classList.add("hidden");
+  $("panel").classList.remove("hidden");
+  $("welcome").textContent="Logged in as: "+d.username;
+  msg("Login successful.");
+  await loadOrders();
+ }catch(err){alert(err.message)}
+ finally{$("loginBtn").disabled=false}
+};
+async function loadOrders(){
+ try{
+  const d=await api("/api/admin/orders");
+  const body=$("orders");
+  body.replaceChildren();
+  if(!d.orders.length){
+   const tr=body.insertRow(),td=tr.insertCell();
+   td.colSpan=9;td.textContent="No orders found.";
+  }
+  for(const o of d.orders){
+   const tr=body.insertRow();
+   const vals=[
+    o.id,o.email,o.department,
+    Number(o.package)===1000?"Academic Subjects":
+    Number(o.package)===3500?"Complete Test Preparation":o.package,
+    "Rs. "+Number(o.amount||0).toLocaleString(),
+    o.method,o.transaction_ref||"-",o.status
+   ];
+   vals.forEach(v=>tr.insertCell().textContent=String(v??""));
+   const td=tr.insertCell();
+   if(o.status==="PENDING"){
+    const a=document.createElement("button");
+    a.className="approve";a.textContent="Approve";
+    a.onclick=()=>review(o.id,"approve");
+    const b=document.createElement("button");
+    b.className="reject";b.textContent="Reject";
+    b.onclick=()=>review(o.id,"reject");
+    td.append(a,b);
+   }else td.textContent="Reviewed";
+  }
+  msg("Orders loaded: "+d.orders.length);
+ }catch(e){msg(e.message,true)}
+}
+async function review(id,action){
+ const promptText=action==="approve"
+ ?"کیا آپ نے ادائیگی خود چیک کرلی ہے؟"
+ :"کیا آپ یہ آرڈر Reject کرنا چاہتے ہیں؟";
+ if(!confirm(promptText))return;
+ try{
+  const d=await api("/api/admin/orders/"+id+"/"+action,{method:"POST"});
+  msg("Order #"+d.order_id+" status: "+d.status);
+  await loadOrders();
+ }catch(e){msg(e.message,true)}
+}
+$("refresh").onclick=loadOrders;
+$("logout").onclick=async()=>{
+ try{await api("/api/admin/logout",{method:"POST"})}
+ catch(e){msg(e.message,true)}
+ csrf="";
+ $("panel").classList.add("hidden");
+ $("login").classList.remove("hidden");
+};
+</script>
+</body>
+</html>

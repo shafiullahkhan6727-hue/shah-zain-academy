@@ -1,0 +1,19 @@
+SHAH ZAIN ACADEMY PAYMENT SYSTEM NOTES
+
+New page:
+pages/payment.html
+
+Open in local preview:
+http://127.0.0.1:8080/pages/payment.html
+
+IMPORTANT:
+This page is a front-end interface only. It does not process payments,
+send requests to a server, verify transaction references, or unlock PDFs.
+
+Before taking real payments:
+1. Set up a secure server/backend and database.
+2. Integrate official EasyPaisa/JazzCash merchant APIs, if available.
+3. Verify payment notifications server-side.
+4. Store premium PDFs outside the public website directory.
+5. Serve paid files only after checking the logged-in user's verified purchase.
+6. Never treat a browser/localStorage flag or uploaded screenshot as proof of payment.

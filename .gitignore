@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+backend/academy.db
+backend/.secret_key
+private_materials/
+backups/
+.env
+.env.*
+!.env.example

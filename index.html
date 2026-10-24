@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#102b50">
+<meta name="description" content="Shah Zain Learning Academy - Online provides educational guidance, study materials, online tests and preparation resources for students and competitive exams.">
+<title>Shah Zain Learning Academy - Online</title>
+<style>
+:root{--navy:#102b50;--blue:#1e4f91;--light:#f2f6fc;--gold:#e9b95b;--text:#172337;--muted:#627086;--white:#fff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--text);line-height:1.7;background:#fff}
+a{text-decoration:none;color:inherit}
+button,a{ -webkit-tap-highlight-color:transparent}
+.container{width:min(1120px,92%);margin:auto}
+header{position:sticky;top:0;z-index:20;background:#fff;box-shadow:0 3px 18px #102b5010}
+.nav{min-height:78px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:800;color:var(--navy);line-height:1.25}
+.logo{width:48px;height:48px;border-radius:13px;display:grid;place-items:center;background:var(--navy);color:#fff;font-size:17px;overflow:hidden}
+.logo img{width:100%;height:100%;object-fit:contain}
+.brand small{display:block;font-size:11px;letter-spacing:1.5px;color:var(--blue);margin-top:5px}
+nav{display:flex;align-items:center;gap:20px;font-size:14px;font-weight:700}
+nav a:hover{color:var(--blue)}
+.btn{display:inline-flex;justify-content:center;align-items:center;padding:12px 21px;border-radius:9px;background:var(--blue);color:#fff;font-weight:700;border:0;cursor:pointer}
+.btn-outline{background:#fff;color:var(--navy);border:1px solid #d5dfec}
+.menu{display:none;background:none;border:0;font-size:27px;color:var(--navy)}
+.hero{background:linear-gradient(125deg,#102b50 0%,#17457d 65%,#2564a4 100%);color:#fff;padding:82px 0 88px;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.25fr .75fr;align-items:center;gap:45px}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:2.3px;color:var(--gold);text-transform:uppercase}
+h1{font-size:clamp(36px,5vw,59px);line-height:1.12;margin:16px 0 22px;letter-spacing:-1.4px}
+.hero p{font-size:17px;color:#e3ebf6;max-width:650px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.hero .btn{background:var(--gold);color:#172337}
+.hero .btn-outline{background:transparent;border-color:#ffffff70;color:#fff}
+.hero-panel{padding:30px;border:1px solid #ffffff2d;border-radius:22px;background:#ffffff0d;box-shadow:0 20px 55px #06172b35}
+.hero-panel h2{margin:0 0 18px;font-size:23px}
+.feature{display:flex;gap:13px;padding:13px 0;border-bottom:1px solid #ffffff24}
+.feature:last-child{border-bottom:0}
+.check{width:28px;height:28px;flex:0 0 28px;border-radius:8px;display:grid;place-items:center;background:#ffffff1a;color:var(--gold);font-weight:bold}
+.feature strong{display:block}.feature span{font-size:13px;color:#dbe5f3}
+section{padding:75px 0}
+.section-head{text-align:center;max-width:720px;margin:0 auto 38px}
+.section-head h2{font-size:clamp(28px,4vw,39px);line-height:1.2;color:var(--navy);margin:10px 0}
+.section-head p{color:var(--muted)}
+.kicker{color:var(--blue);font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.card{border:1px solid #e3eaf3;border-radius:16px;padding:25px;background:#fff;box-shadow:0 8px 30px #12294b08}
+.card-icon{width:48px;height:48px;border-radius:13px;background:#eaf1fb;color:var(--blue);display:grid;place-items:center;font-size:23px;font-weight:bold}
+.card h3{color:var(--navy);margin:16px 0 8px;font-size:20px}
+.card p{color:var(--muted);font-size:14px;margin:0 0 15px}
+.text-link{color:var(--blue);font-weight:800;font-size:14px}
+.light-section{background:var(--light)}
+.team-card{overflow:hidden;padding:0;text-align:center}
+.team-photo{height:225px;background:linear-gradient(145deg,#e7eef8,#f8fbff);display:grid;place-items:center;overflow:hidden}
+.team-photo img{width:100%;height:100%;object-fit:cover}
+.initials{width:100px;height:100px;border-radius:50%;display:grid;place-items:center;background:var(--navy);color:white;font-size:30px;font-weight:800;border:5px solid #fff;box-shadow:0 6px 20px #102b5020}
+.team-info{padding:22px}
+.role{display:inline-block;color:var(--blue);font-size:11px;font-weight:800;letter-spacing:1.3px}
+.team-info h3{margin:7px 0;color:var(--navy)}
+.team-info p{font-size:13px;color:var(--muted);margin:0}
+.senior{border:2px solid var(--gold);box-shadow:0 12px 30px #e9b95b22}
+.recognition{margin-top:28px;background:#fff;border-left:4px solid var(--gold);padding:20px 24px;border-radius:10px;color:var(--muted)}
+.recognition strong{color:var(--navy)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.about-box{background:var(--navy);color:white;border-radius:20px;padding:30px}
+.about-box h3{margin-top:0;font-size:24px}
+.about-box p{color:#e0e8f4}
+.about-list{padding-left:20px}
+.about-list li{margin:10px 0}
+.cta{background:linear-gradient(120deg,#102b50,#1e4f91);color:#fff;text-align:center;border-radius:22px;padding:45px 25px}
+.cta h2{font-size:clamp(27px,4vw,38px);margin:0 0 10px}
+.cta p{color:#e1e9f5}
+.cta .btn{background:var(--gold);color:var(--navy);margin:7px}
+footer{background:#0b1e37;color:#e5ebf4;padding:38px 0 20px}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:30px}
+footer h3,footer h4{color:#fff}
+footer p,footer a{font-size:13px;color:#c4d0e0}
+.footer-links{display:grid;gap:7px}
+.copyright{border-top:1px solid #ffffff20;margin-top:25px;padding-top:18px;font-size:12px;color:#aebdd0}
+@media(max-width:800px){.hero-grid,.about-grid{grid-template-columns:1fr}.hero{padding:55px 0}.grid{grid-template-columns:repeat(2,1fr)}nav{display:none;position:absolute;top:78px;left:0;right:0;background:white;padding:20px 5%;box-shadow:0 12px 20px #102b5015;flex-direction:column;align-items:stretch}.menu{display:block}.nav.open nav{display:flex}.nav nav .btn{width:100%}.footer-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:540px){.grid{grid-template-columns:1fr}.brand{font-size:13px}.brand small{font-size:9px}.logo{width:42px;height:42px}.footer-grid{grid-template-columns:1fr}section{padding:55px 0}.team-photo{height:245px}.hero-panel{padding:22px}}
+
+/* PHOTO DISPLAY FIX */
+.team-photo {
+    width: 100%;
+    height: 280px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f4f6fa;
+}
+
+.team-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain !important;
+    object-position: center center !important;
+    display: block;
+}
+
+</style>
+</head>
+<body>
+<header>
+<div class="container nav" id="nav">
+<a class="brand" href="index.html">
+<span class="logo"><img src="assets/images/logo.png" alt="Academy logo" onerror="this.style.display='none';this.parentElement.textContent='SZ';"></span>
+<span>Shah Zain Learning Academy<small>ONLINE LEARNING & TEST PREPARATION</small></span>
+</a>
+<button class="menu" aria-label="Open navigation" onclick="document.getElementById('nav').classList.toggle('open')">☰</button>
+<nav>
+<a href="#home">Home</a><a href="#programs">Our Services</a><a href="#team">Our Team</a><a href="#about">About Us</a>
+<a class="btn" href="pages/login.html">Login</a>
+<a class="btn btn-outline" href="pages/register.html">Register</a>
+</nav>
+</div>
+</header>
+
+<main>
+<section class="hero" id="home">
+<div class="container hero-grid">
+<div>
+<div class="eyebrow">Learn • Prepare • Succeed</div>
+<h1>Build Your Knowledge.<br>Prepare for Your Future.</h1>
+<p>Welcome to Shah Zain Learning Academy - Online, an educational platform designed to help students strengthen their knowledge, revise important subjects and prepare for written tests through structured learning resources.</p>
+<div class="hero-actions"><a class="btn" href="#programs">Explore Learning</a><a class="btn btn-outline" href="pages/register.html">Create Your Account</a></div>
+</div>
+<div class="hero-panel">
+<h2>Your learning journey starts here</h2>
+<div class="feature"><div class="check">✓</div><div><strong>Study Materials</strong><span>Organised educational notes and preparation resources.</span></div></div>
+<div class="feature"><div class="check">✓</div><div><strong>Test Preparation</strong><span>Revision support for academic and competitive tests.</span></div></div>
+<div class="feature"><div class="check">✓</div><div><strong>Online Learning</strong><span>Access learning information and practice resources online.</span></div></div>
+</div>
+</div>
+</section>
+
+<section id="programs">
+<div class="container">
+<div class="section-head"><div class="kicker">What We Offer</div><h2>Learning Resources for Your Goals</h2><p>Explore the learning areas available through our academy. Availability of specific materials, courses and tests may depend on the programme.</p></div>
+<div class="grid">
+<article class="card"><div class="card-icon">A</div><h3>Academic Subjects</h3><p>Build a strong foundation with subject-focused learning points, revision notes and useful educational explanations.</p><a class="text-link" href="pages/study-materials.html">Explore Materials →</a></article>
+<article class="card"><div class="card-icon">T</div><h3>Written Test Preparation</h3><p>Prepare for relevant recruitment tests with general knowledge, English, reasoning and other test-related topics.</p><a class="text-link" href="pages/courses.html">Explore Preparation →</a></article>
+<article class="card"><div class="card-icon">✓</div><h3>Online Test Practice</h3><p>Use practice activities to revise important concepts and check your understanding as test features become available.</p><a class="text-link" href="pages/online-tests.html">Explore Tests →</a></article>
+</div>
+</div>
+</section>
+
+<section class="light-section" id="team">
+<div class="container">
+<div class="section-head"><div class="kicker">Meet the People Behind the Academy</div><h2>Our Leadership & Instructors</h2><p>Meet the team working to support the academy's educational mission.</p></div>
+<div class="grid">
+<article class="card team-card">
+<div class="team-photo"><img src="assets/team/shafi-ullah-khan.jpg" alt="Shafi Ullah Khan, Owner and Founder" loading="lazy" onerror="this.outerHTML='<div class=&quot;initials&quot;>SK</div>'"></div>
+<div class="team-info"><span class="role">OWNER &amp; FOUNDER</span><h3>Shafi Ullah Khan</h3><p>Founder of Shah Zain Learning Academy - Online, working to develop an accessible educational platform for students and test preparation.</p></div>
+</article>
+<article class="card team-card senior">
+<div class="team-photo"><img src="assets/team/mahaam-khanzadi.png" alt="Mahaam Khanzadi, Senior Instructor" loading="lazy" onerror="this.outerHTML='<div class=&quot;initials&quot;>MK</div>'"></div>
+<div class="team-info"><span class="role">SENIOR INSTRUCTOR</span><h3>Mahaam Khanzadi</h3><p>Recognised for her valuable contribution, dedication and substantial effort in helping build and develop the academy.</p></div>
+</article>
+<article class="card team-card">
+<div class="team-photo"><img src="assets/team/hasina-fatima.png" alt="Hasina Fatima, Instructor" loading="lazy" onerror="this.outerHTML='<div class=&quot;initials&quot;>HF</div>'"></div>
+<div class="team-info"><span class="role">INSTRUCTOR</span><h3>Hasina Fatima</h3><p>Supports students through educational guidance and the delivery of learning content and preparation resources.</p></div>
+</article>
+</div>
+<div class="recognition"><strong>Special Recognition — Mahaam Khanzadi:</strong> Her hard work, commitment and meaningful contribution to the academy's development deserve special appreciation.</div>
+</div>
+</section>
+
+<section id="about">
+<div class="container about-grid">
+<div><div class="kicker">About Our Academy</div><h2 style="font-size:clamp(29px,4vw,40px);line-height:1.2;color:var(--navy)">Education, Preparation and Progress</h2>
+<p>Shah Zain Learning Academy - Online is an educational initiative focused on helping learners access organised study resources and prepare more confidently for academic and written examinations. The academy aims to make learning easier to navigate by bringing useful educational content and preparation guidance together in one place.</p>
+<p>Our focus is on learning support, consistent revision, subject understanding and preparation for relevant tests. We aim to keep the experience clear, accessible and student-focused.</p>
+</div>
+<div class="about-box"><h3>Our Educational Focus</h3><ul class="about-list"><li>Academic subject revision and important points</li><li>General knowledge and educational information</li><li>Reasoning and intelligence-test practice</li><li>Written-test preparation guidance</li><li>Online learning resources and practice opportunities</li><li>Encouraging discipline, confidence and lifelong learning</li></ul></div>
+</div>
+</section>
+
+<section style="padding-top:0">
+<div class="container"><div class="cta"><h2>Take the Next Step in Your Learning</h2><p>Join the academy website to explore learning resources and preparation opportunities.</p><a class="btn" href="pages/register.html">Register Now</a><a class="btn" href="pages/login.html" style="background:white;color:#102b50">Member Login</a></div></div>
+</section>
+</main>
+
+<footer>
+<div class="container">
+<div class="footer-grid">
+<div><h3>Shah Zain Learning Academy - Online</h3><p>An online educational initiative for academic learning, revision resources and written-test preparation.</p></div>
+<div><h4>Explore</h4><div class="footer-links"><a href="#programs">Our Services</a><a href="#team">Our Team</a><a href="#about">About Us</a><a href="pages/study-materials.html">Study Materials</a></div></div>
+<div><h4>Account & Policies</h4><div class="footer-links"><a href="pages/login.html">Login</a><a href="pages/register.html">Register</a><a href="pages/privacy.html">Privacy Policy</a><a href="pages/terms.html">Terms &amp; Conditions</a></div></div>
+</div>
+<div class="copyright">© <span id="year"></span> Shah Zain Learning Academy - Online. All rights reserved.</div>
+</div>
+</footer>
+<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+</body>
+</html>

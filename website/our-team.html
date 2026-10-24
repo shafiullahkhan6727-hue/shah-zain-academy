@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<meta name="theme-color" content="#123b70">
+
+<meta name="description"
+content="Meet the leadership and instructors of Shah Zain Learning Academy - Online.">
+
+<title>Our Team | Shah Zain Learning Academy</title>
+
+<style>
+:root {
+  --navy: #123b70;
+  --blue: #245da0;
+  --light-blue: #edf4fc;
+  --white: #ffffff;
+  --text: #172338;
+  --muted: #657187;
+  --border: #e0e8f2;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: #f6f8fc;
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.7;
+}
+
+.team-page {
+  padding: 65px 18px 75px;
+}
+
+.container {
+  width: 100%;
+  max-width: 1150px;
+  margin: auto;
+}
+
+/* ACADEMY HEADER */
+
+.academy-header {
+  margin-bottom: 55px;
+  text-align: center;
+}
+
+.academy-name {
+  margin: 0;
+  color: var(--navy);
+  font-size: clamp(23px, 4vw, 38px);
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.academy-online {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.header-line {
+  width: 85px;
+  height: 4px;
+  margin: 22px auto 0;
+  border-radius: 5px;
+  background: var(--navy);
+}
+
+/* SECTION INTRODUCTION */
+
+.section-heading {
+  max-width: 760px;
+  margin: 0 auto 45px;
+  text-align: center;
+}
+
+.section-label {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: var(--blue);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.section-heading h2 {
+  margin: 0 0 14px;
+  color: var(--navy);
+  font-size: clamp(30px, 5vw, 45px);
+  line-height: 1.2;
+  font-weight: 800;
+}
+
+.section-heading p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 16px;
+}
+
+/* TEAM CARDS */
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 25px;
+  align-items: stretch;
+}
+
+.team-card {
+  min-width: 0;
+  overflow: hidden;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: 0 8px 30px rgba(18, 59, 112, 0.06);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.team-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 36px rgba(18, 59, 112, 0.12);
+}
+
+.photo-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  overflow: hidden;
+  background: var(--light-blue);
+}
+
+.photo-wrap img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.photo-fallback {
+  display: none;
+  color: var(--navy);
+  font-size: 50px;
+  font-weight: 800;
+}
+
+.photo-wrap.missing .photo-fallback {
+  display: block;
+}
+
+.card-content {
+  padding: 25px 22px 28px;
+  text-align: center;
+}
+
+.role {
+  display: inline-block;
+  margin-bottom: 11px;
+  color: var(--blue);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.1px;
+}
+
+.card-content h3 {
+  margin: 0 0 13px;
+  color: var(--navy);
+  font-size: 22px;
+  line-height: 1.4;
+}
+
+.card-content p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.85;
+}
+
+/* SPECIAL CONTRIBUTION */
+
+.contribution {
+  margin-top: 45px;
+  padding: 34px 30px;
+  border: 1px solid #dbe6f5;
+  border-left: 5px solid var(--navy);
+  border-radius: 12px;
+  background: var(--white);
+}
+
+.contribution h3 {
+  margin: 0 0 12px;
+  color: var(--navy);
+  font-size: 23px;
+}
+
+.contribution p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+/* FOOTER */
+
+.team-footer {
+  margin-top: 50px;
+  padding-top: 25px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+.team-footer strong {
+  display: block;
+  color: var(--navy);
+  font-size: 17px;
+}
+
+.team-footer p {
+  margin: 5px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* RESPONSIVE LAYOUT */
+
+@media (max-width: 900px) {
+  .team-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .photo-wrap {
+    height: 310px;
+  }
+}
+
+@media (max-width: 580px) {
+  .team-page {
+    padding: 40px 15px 50px;
+  }
+
+  .academy-header {
+    margin-bottom: 40px;
+  }
+
+  .section-heading {
+    margin-bottom: 30px;
+  }
+
+  .team-grid {
+    grid-template-columns: 1fr;
+    max-width: 390px;
+    margin: 0 auto;
+    gap: 22px;
+  }
+
+  .photo-wrap {
+    height: 340px;
+  }
+
+  .card-content {
+    padding: 23px 20px 26px;
+  }
+
+  .contribution {
+    margin-top: 30px;
+    padding: 25px 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .team-card {
+    transition: none;
+  }
+
+  .team-card:hover {
+    transform: none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<main class="team-page">
+
+<div class="container">
+
+  <header class="academy-header">
+
+    <h1 class="academy-name">
+      Shah Zain Learning Academy
+    </h1>
+
+    <p class="academy-online">
+      Online Education &amp; Test Preparation
+    </p>
+
+    <div class="header-line"></div>
+
+  </header>
+
+  <section aria-labelledby="team-title">
+
+    <div class="section-heading">
+
+      <span class="section-label">
+        THE PEOPLE BEHIND OUR ACADEMY
+      </span>
+
+      <h2 id="team-title">
+        Meet Our Team
+      </h2>
+
+      <p>
+        Meet the founder and dedicated instructors of
+        Shah Zain Learning Academy - Online, united by
+        a shared commitment to education and student success.
+      </p>
+
+    </div>
+
+    <div class="team-grid">
+
+      <!-- FOUNDER -->
+
+      <article class="team-card">
+
+        <div class="photo-wrap">
+
+          <img
+            src="../assets/team/shafi-ullah-khan.jpg"
+            alt="Shafi Ullah Khan"
+            loading="lazy"
+            onerror="
+              this.style.display='none';
+              this.parentElement.classList.add('missing');
+            "
+          >
+
+          <span class="photo-fallback">SK</span>
+
+        </div>
+
+        <div class="card-content">
+
+          <span class="role">
+            OWNER &amp; FOUNDER
+          </span>
+
+          <h3>Shafi Ullah Khan</h3>
+
+          <p>
+            Founder of Shah Zain Learning Academy - Online,
+            working to build an accessible and professional
+            educational platform for students.
+          </p>
+
+        </div>
+
+      </article>
+
+      <!-- SENIOR INSTRUCTOR AND KEY CONTRIBUTOR -->
+
+      <article class="team-card">
+
+        <div class="photo-wrap">
+
+          <img
+            src="../assets/team/mahaam-khanzadi.jpg"
+            alt="Mahaam Khanzadi, Senior Instructor"
+            loading="lazy"
+            onerror="
+              this.style.display='none';
+              this.parentElement.classList.add('missing');
+            "
+          >
+
+          <span class="photo-fallback">MK</span>
+
+        </div>
+
+        <div class="card-content">
+
+          <span class="role">
+            SENIOR INSTRUCTOR
+          </span>
+
+          <h3>Mahaam Khanzadi</h3>
+
+          <p>
+            A valued senior instructor and key contributor
+            to the academy's journey, recognized for her
+            important support and efforts in helping build
+            Shah Zain Learning Academy.
+          </p>
+
+        </div>
+
+      </article>
+
+      <!-- INSTRUCTOR -->
+
+      <article class="team-card">
+
+        <div class="photo-wrap">
+
+          <img
+            src="../assets/team/hasina-fatima.jpg"
+            alt="Hasina Fatima, Instructor"
+            loading="lazy"
+            onerror="
+              this.style.display='none';
+              this.parentElement.classList.add('missing');
+            "
+          >
+
+          <span class="photo-fallback">HF</span>
+
+        </div>
+
+        <div class="card-content">
+
+          <span class="role">
+            INSTRUCTOR
+          </span>
+
+          <h3>Hasina Fatima</h3>
+
+          <p>
+            Supporting students through educational
+            guidance, classroom activities and
+            written-test preparation.
+          </p>
+
+        </div>
+
+      </article>
+
+    </div>
+
+  </section>
+
+  <!-- SPECIAL RECOGNITION -->
+
+  <section class="contribution"
+    aria-labelledby="contribution-title">
+
+    <h3 id="contribution-title">
+      Recognizing the Effort Behind Our Academy
+    </h3>
+
+    <p>
+      Shah Zain Learning Academy represents a journey
+      of dedication, hard work and a shared commitment
+      to education. Mahaam Khanzadi has played an
+      important role in supporting the academy's
+      development. Her contribution deserves sincere
+      recognition and appreciation as part of our
+      academy's story.
+    </p>
+
+  </section>
+
+  <footer class="team-footer">
+
+    <strong>
+      Shah Zain Learning Academy - Online
+    </strong>
+
+    <p>
+      Education • Learning • Test Preparation
+    </p>
+
+  </footer>
+
+</div>
+
+</main>
+
+</body>
+</html>

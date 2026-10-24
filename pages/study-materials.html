@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Paid Study Materials | Shah Zain Learning Academy</title><style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7fc;color:#172337;line-height:1.6}
+header{background:#102b50;color:white;text-align:center;padding:24px 12px}
+nav{background:#173e70;padding:12px;text-align:center}
+nav a{color:white;margin:0 10px;text-decoration:none;font-weight:bold}
+main{max-width:1100px;margin:24px auto;padding:0 14px}
+.card,.item{background:white;border:1px solid #dbe4f0;border-radius:12px;padding:16px;margin:12px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+h2,h3{color:#102b50}
+label{display:block;margin:10px 0}
+select,input{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:7px}
+button,.btn{display:inline-block;background:#1e4f91;color:white;border:0;border-radius:7px;padding:10px 14px;text-decoration:none;cursor:pointer;margin:5px 0}
+.price{font-size:22px;font-weight:bold;color:#147343}
+.notice{background:#fff8df;padding:12px;border-left:4px solid #d49b19}
+footer{text-align:center;padding:20px;color:#667085}
+[hidden]{display:none!important}
+</style></head>
+<body><header><h1>Shah Zain Learning Academy - Online</h1><p>Paid Study Materials & Government Jobs Preparation</p></header>
+<nav><a href="../index.html">Home</a><a href="study-materials.html">Study Materials</a><a href="online-tests.html">Online Tests</a></nav>
+<main>
+<section class="card"><h2>Choose Department</h2><label for="department">Department</label><select id="department"><option value="">-- Select department --</option></select>
+<div id="resourceArea" hidden><h2>Available Study Materials</h2><div class="grid" id="resources"></div></div></section>
+<section class="card"><h2>Choose Package</h2><p>Select a department first, then choose a package.</p><div class="grid" id="packages"></div><p id="summary"></p></section>
+<section class="card" id="payment" hidden><h2>Payment Instructions</h2><p id="order"></p>
+<div class="notice">Send the exact amount and submit your transaction reference. Access is not approved until an administrator verifies the payment.</div>
+<h3>Easypaisa</h3><p>03490437048</p><h3>JazzCash</h3><p>03095824984</p>
+<h3>Bank Transfer / IBAN</h3><p>PK60JSBL9999903490437048</p>
+<h2>Payment Request</h2><form id="paymentForm">
+<label>Student name<input id="student" required></label>
+<label>Phone number<input id="phone" required placeholder="03XXXXXXXXX"></label>
+<label>Payment method<select id="method"><option>Easypaisa</option><option>JazzCash</option><option>Bank Transfer</option></select></label>
+<label>Transaction reference<input id="transaction" required></label>
+<button type="submit">Submit Payment Request</button></form><p id="requestMessage"></p>
+<p>Payment requests are reviewed by the academy administrator. Access stays locked until verification.</p></section>
+</main><footer>Learn With Shafi Ullah Khan &amp; Hasina Fatima</footer>
+<script>
+const departments = ["Police", "ASI", "Constable", "Rangers", "ASF", "FIA", "FBR", "ANF", "NAB", "PMA Long Course", "ISSB", "AFNS", "LCC", "PAF", "Army Civilian", "Navy", "Rescue 1122", "Customs", "Forest Guard", "PERA", "MOD", "FPSC", "PPSC", "KPPSC", "NTS", "ETEA", "UDC", "LDC", "Assistant", "Prison Department", "Excise and Taxation", "WAPDA", "NADRA", "NHMP", "Education Department", "Health Department", "Railways", "Airport Security", "Intelligence Bureau", "Federal Constabulary", "Wildlife Department", "Irrigation Department", "Local Government", "Food Department", "Revenue Department", "Patwari", "Tehsildar", "Court Jobs", "Bank Jobs", "Other Government Jobs"];
+const materials = [["Intelligence IQ (Verbal & Non-Verbal)", "1YGm1-6HbYDORaKUyelMM1vvSoD5cyZxN"], ["General Knowledge", "1IfTxV5wWUMMDaY_s9dfQXurlCHUSZclW"], ["English", "1vasea036WrQ3Lvx2xl9CclETKJ_DvMg6"], ["Mathematics", "13YThttgspmWp4xFsf1ykx1fepqppkNYe"], ["Physics, Chemistry & Biology", "1aTHDSnpv51HA_OcgBjEd_FnzOhyvEwRU"], ["Islamic Studies", "14WiaEeo6r8ssggtF_8dXoVA2xCJQPgzp"], ["Computer Studies", "1iTZwafXok5a8df1hnuwty475NJeWKDl6"], ["Interview Preparation", "1p4qubHt5HoYwQ3j8ChbwvcatBJ4r5tRc"], ["Application & Selection Process", "1j1iGe_ewq16hVcRLdwkLKKBDpNn-OIFH"], ["Official Syllabus Collection", "1kJ7JFV-1VIsxX4h69dlrILMVbMdeQGEa"]];
+const packages = [["Package 1 — Academic Subjects", 1000], ["Package 2 — Complete Test Preparation", 3500]];
+const dep = document.getElementById('department');
+departments.forEach(d => { const o=document.createElement('option'); o.value=d; o.textContent=d; dep.appendChild(o); });
+materials.forEach(m => { const el=document.createElement('div'); el.className='item'; const h=document.createElement('h3'); h.textContent=m[0]; const a=document.createElement('a'); a.className='btn'; a.target='_blank'; a.rel='noopener'; a.href='https://drive.google.com/file/d/'+m[1]+'/view'; a.textContent='Open PDF'; el.append(h,a); document.getElementById('resources').appendChild(el); });
+let selected = null;
+dep.addEventListener('change', () => { document.getElementById('resourceArea').hidden=!dep.value; selected=null; document.getElementById('payment').hidden=true; document.getElementById('summary').textContent=''; });
+packages.forEach(p => { const el=document.createElement('div'); el.className='item'; const h=document.createElement('h3'); h.textContent=p[0]; const price=document.createElement('p'); price.className='price'; price.textContent='Rs. '+p[1]; const b=document.createElement('button'); b.textContent='Choose Package'; b.onclick=()=>{ if(!dep.value){alert('Select a department first.');return;} selected={name:p[0],amount:p[1],department:dep.value}; document.getElementById('payment').hidden=false; document.getElementById('order').textContent='Department: '+selected.department+' | Package: '+selected.name+' | Amount: Rs. '+selected.amount; document.getElementById('summary').textContent='Selected '+selected.name+' package for '+selected.department; }; el.append(h,price,b); document.getElementById('packages').appendChild(el); });
+document.getElementById('paymentForm').addEventListener('submit', async e => {
+  e.preventDefault();
+
+  const message = document.getElementById('requestMessage');
+  if (!selected) {
+    message.textContent = 'Please select a department and package first.';
+    return;
+  }
+
+  const methodMap = {
+    'Easypaisa': 'easypaisa',
+    'JazzCash': 'jazzcash',
+    'Bank Transfer': 'bank'
+  };
+  const transactionRef = document.getElementById('transaction').value.trim();
+
+  if (!transactionRef) {
+    message.textContent = 'Please enter your transaction reference.';
+    return;
+  }
+
+  const button = document.querySelector('#paymentForm button[type="submit"]');
+  button.disabled = true;
+  message.textContent = 'Submitting your payment request...';
+
+  try {
+    const response = await fetch('../api/orders', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        department: selected.department,
+        package: Number(selected.amount),
+        method: methodMap[document.getElementById('method').value],
+        transaction_ref: transactionRef
+      })
+    });
+
+    const result = await response.json().catch(() => ({}));
+
+    if (response.status === 401) {
+      message.textContent = 'Please log in first. Redirecting to login...';
+      setTimeout(() => {
+        window.location.href = 'login.html';
+      }, 1200);
+      return;
+    }
+
+    if (!response.ok) {
+      throw new Error(result.error || result.message || 'Could not submit the request.');
+    }
+
+    message.textContent = 'Payment request submitted successfully. Order #' +
+      result.order_id + ' is PENDING. Materials will remain locked until Admin verifies payment.';
+    document.getElementById('paymentForm').reset();
+  } catch (error) {
+    message.textContent = error.message || 'Network error. Please try again.';
+  } finally {
+    button.disabled = false;
+  }
+});
+</script></body></html>

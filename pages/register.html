@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Register | Shah Zain Learning Academy</title><style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:20px;background:#f2f6fc;font-family:Arial,sans-serif;color:#172337}.box{width:min(450px,100%);background:white;padding:32px;border-radius:18px;box-shadow:0 15px 50px #102b5015}h1{color:#102b50;margin-bottom:5px}p{color:#627086;font-size:14px}label{display:block;margin-top:15px;font-weight:bold;font-size:14px}input{width:100%;padding:13px;margin-top:7px;border:1px solid #ccd6e4;border-radius:8px;font-size:16px}button{display:block;width:100%;margin-top:22px;padding:14px;background:#1e4f91;color:white;border:0;border-radius:8px;font-size:16px;font-weight:bold;cursor:pointer}.note{font-size:12px;background:#fff7e4;padding:12px;border-radius:8px;color:#72551a}a{color:#1e4f91}
+</style></head><body><main class="box"><a href="../index.html">← Back to Home</a><h1>Create Your Account</h1><p>Register for Shah Zain Learning Academy - Online.</p><form id="register"><label for="name">Full Name</label><input id="name" autocomplete="name" required><label for="email">Email Address</label><input id="email" type="email" autocomplete="email" required><label for="password">Create Password</label><input id="password" type="password" minlength="10" autocomplete="new-password" required><button type="submit">Create Account</button></form><p>Already registered? <a href="login.html">Login here</a></p><div class="note" id="status" role="status"></div></main><script>
+const form = document.getElementById('register');
+const statusBox = document.getElementById('status');
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const button = form.querySelector('button[type="submit"]');
+  const password = document.getElementById('password').value;
+  if (password.length < 10) {
+    statusBox.textContent = 'Password must be at least 10 characters long.';
+    return;
+  }
+  button.disabled = true;
+  statusBox.textContent = 'Creating your account...';
+  try {
+    const response = await fetch('/api/register', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        name: document.getElementById('name').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        password: password
+      })
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.error || 'Registration failed. Please try again.');
+    statusBox.textContent = 'Account created successfully. Opening study materials...';
+    window.location.href = 'study-materials.html';
+  } catch (error) {
+    statusBox.textContent = error.message || 'Could not contact the server.';
+  } finally {
+    button.disabled = false;
+  }
+});
+</script></body></html>
